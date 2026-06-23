@@ -14,7 +14,7 @@ logic, focused instead on UI fidelity and a clean, centralized state model.
 | Styling | Tailwind CSS v3 |
 | State management | React's built-in `useReducer` + Context API |
 | Icons | react-icons |
-| Data | Local mock array (`src/data/images.js`) — no backend |
+| Data | Picsum Photos API (no key) for images, merged with local mock metadata (`src/data/imageMeta.js`) — no Create/Update/Delete logic |
 
 ## Getting started
 
@@ -48,13 +48,27 @@ src/
       EmptyState.jsx              # "no images" / "no search matches" state
   context/
     ImagesContext.jsx           # the central store (see below)
-  data/images.js                # mock dataset — swap this array, nothing else changes
+  data/imageMeta.js             # local mock metadata (name, dates) — pairs with API photos
+  services/picsumApi.js         # fetchPicsumPhotos() + picsumImageUrl() — talks to Picsum
   utils/formatTime.js           # timeAgo() / formatCreatedOn() — derive text from dates
   pages/
-    ImageFolderPage.jsx         # the main page being cloned
-    PlaceholderPage.jsx         # stub for Video/Document/All Files/Trash/Dashboard
+    DashboardPage.jsx           # Home/Dashboard - fully hardcoded, context-only per the brief
+    ImageFolderPage.jsx         # the main page being cloned, state-driven
+    PlaceholderPage.jsx         # stub for Video/Document/All Files/Trash
   App.jsx                       # route table
 ```
+
+## Dashboard / Home page
+
+The brief lists related pages as "context only" (same shell, not graded on
+state management), so `DashboardPage.jsx` and everything under
+`components/dashboard/` are intentionally **hardcoded** from
+`data/dashboardData.js` - no Context, no `useReducer`. It still gets the
+same fidelity treatment as the Image Folder page: folder grid, a half-donut
+Storage Details gauge (Recharts `PieChart`), an Activity Chart (Recharts
+`LineChart`), an Uploading-on-Drive panel, a Recently Added Files table,
+Cloud Storage progress bars, and an upgrade promo card - matching the
+reference's Home screen layout.
 
 ## State management: why built-in React was enough
 
@@ -75,7 +89,8 @@ feature like this, it would be extra setup without a real benefit.
 ### How the store is structured
 
 `ImagesContext.jsx` holds:
-- `images` — the full list (source of truth, normally from `data/images.js`)
+- `images` — the full list (merged from local metadata + the Picsum API)
+- `status` / `error` — `"idle" | "loading" | "success" | "error"`, set by the fetch effect
 - `searchTerm` — current filter text
 - `previewImageId` — id of the image open in the modal, or `null`
 
@@ -85,9 +100,29 @@ Everything else is **derived**, not stored separately:
 - `previewImage` = the single image object matching `previewImageId`
 
 This means `ImageCard`, the grid, and the scroller never read from a second
-hardcoded array — deleting `data/images.js`'s contents and swapping in a
-different mock array requires **zero changes** to any component, only to
-the one file that exports `images`.
+hardcoded array — swapping `data/imageMeta.js`'s contents requires **zero
+changes** to any component.
+
+## Image data: Picsum Photos API
+
+On mount, `ImagesProvider` calls `fetchPicsumPhotos()` once
+(`src/services/picsumApi.js`), which hits `GET https://picsum.photos/v2/list`
+(no API key required). Each returned photo's `id` is merged with one entry
+from the local mock metadata (`src/data/imageMeta.js` — file name,
+`createdAt`, `lastOpenedAt`) to build the final image objects the rest of the
+app reads.
+
+- While the fetch is in flight, the page shows skeleton cards
+  (`ImageCardSkeleton.jsx`) instead of a blank screen.
+- If the fetch fails (offline, API down), an error banner is shown instead
+  of broken `<img>` tags.
+- The photographer's name from Picsum's response is shown as a credit line
+  in the preview modal.
+
+This keeps the "local mock data drives the UI" architecture from the brief
+intact — the API call happens in exactly one place, and every component
+downstream still just reads `images` from context, with no idea whether the
+photo URL came from a local file or a network call.
 
 ## Known limitations (intentionally out of scope this round)
 

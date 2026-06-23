@@ -1,7 +1,8 @@
-import { HiOutlinePlus, HiOutlineSearch, HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { HiOutlinePlus, HiOutlineSearch, HiChevronLeft, HiChevronRight, HiOutlineExclamationCircle } from "react-icons/hi";
 import { useRef } from "react";
 import { useImages } from "../context/ImagesContext";
 import ImageCard from "../components/images/ImageCard";
+import ImageCardSkeleton from "../components/images/ImageCardSkeleton";
 import ImagePreviewModal from "../components/images/ImagePreviewModal";
 import EmptyState from "../components/images/EmptyState";
 
@@ -9,13 +10,18 @@ import EmptyState from "../components/images/EmptyState";
  * Image Folder page (Section 5.2). Everything here reads from useImages() -
  * there is no hardcoded array left in this component. Recently Viewed and
  * the All Images grid are two different *views* over the same source of
- * truth, not two separate datasets.
+ * truth, not two separate datasets. Photos themselves come from the Picsum
+ * API on mount, so this page also handles the loading/error states that
+ * come with a real network call.
  */
 export default function ImageFolderPage() {
   const {
     recentlyViewed,
     filteredImages,
     images,
+    isLoading,
+    isError,
+    error,
     searchTerm,
     setSearchTerm,
     previewImage,
@@ -29,9 +35,8 @@ export default function ImageFolderPage() {
     scrollerRef.current?.scrollBy({ left: amount, behavior: "smooth" });
   }
 
-  const hasNoImagesAtAll = images.length === 0;
-  const hasNoSearchMatches = !hasNoImagesAtAll && filteredImages.length === 0;
-
+  const hasNoImagesAtAll = !isLoading && images.length === 0;
+  const hasNoSearchMatches = !isLoading && !hasNoImagesAtAll && filteredImages.length === 0;
   return (
     <div>
       {/* Page header */}
@@ -61,8 +66,27 @@ export default function ImageFolderPage() {
         </div>
       </div>
 
+      {/* Error banner - shown if the Picsum fetch fails */}
+      {isError && (
+        <div className="mb-6 flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 text-sm rounded-md px-4 py-3">
+          <HiOutlineExclamationCircle size={18} className="shrink-0" />
+          <span>Couldn't load images from Picsum ({error}). Check your connection and refresh.</span>
+        </div>
+      )}
+
       {/* Recently Viewed - derived from lastOpenedAt, not a hardcoded list */}
-      {!hasNoImagesAtAll && (
+      {isLoading && (
+        <section className="mb-8">
+          <h2 className="text-section-title text-headingcolor mb-3">Recently viewed</h2>
+          <div className="flex gap-4 overflow-x-hidden pb-2">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <ImageCardSkeleton key={i} className="min-w-[220px] max-w-[220px]" />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {!hasNoImagesAtAll && !isLoading && (
         <section className="mb-8">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-section-title text-headingcolor">Recently viewed</h2>
@@ -105,10 +129,18 @@ export default function ImageFolderPage() {
       <section>
         <h2 className="text-section-title text-headingcolor mb-3">All images</h2>
 
+        {isLoading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <ImageCardSkeleton key={i} />
+            ))}
+          </div>
+        )}
+
         {hasNoImagesAtAll && <EmptyState />}
         {hasNoSearchMatches && <EmptyState isSearchResult />}
 
-        {!hasNoImagesAtAll && !hasNoSearchMatches && (
+        {!hasNoImagesAtAll && !hasNoSearchMatches && !isLoading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {filteredImages.map((image) => (
               <ImageCard

@@ -58,6 +58,7 @@ export default function ImagePreviewModal({ image, onClose }) {
           <span>
             You opened <span className="text-primary font-medium">{timeAgo(image.lastOpenedAt)}</span>
           </span>
+          {image.author && <span>Photo by {image.author} (via Picsum)</span>}
         </div>
       </div>
     </div>

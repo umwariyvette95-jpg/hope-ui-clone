@@ -1,39 +1,46 @@
 import { NavLink } from "react-router-dom";
+import { HiOutlineShoppingBag, HiOutlineShieldCheck, HiOutlineBell } from "react-icons/hi";
 import { navGroups } from "./navConfig";
 
 /**
- * Left sidebar: logo, user mini-profile, then three grouped nav sections.
- * Active route gets a left-bordered Primary highlight, matching Section 4's
- * spec ("active menu item gets a left-bordered highlight in Primary").
- * NavLink's isActive state drives the highlight - no manual route comparison.
+ * Left sidebar: user mini-profile (no logo - the logo lives in the navbar,
+ * matching the reference), three small icon buttons, then grouped nav
+ * sections. Active route gets the Primary color on text + icon, matching
+ * the reference exactly (no left border, no background tint on this design -
+ * those were from an earlier guess before I had the real screenshot).
  */
 export default function Sidebar() {
   return (
-    <aside className="hidden lg:flex lg:flex-col w-[260px] shrink-0 h-screen sticky top-0 bg-white border-r border-bordercolor">
-      {/* Logo */}
-      <div className="flex items-center gap-2 px-6 h-16 border-b border-bordercolor">
-        <div className="w-7 h-7 rounded-md bg-primary flex items-center justify-center text-white font-bold text-sm">
-          H
-        </div>
-        <span className="font-bold text-lg text-headingcolor">Hope UI</span>
-      </div>
-
+    <aside className="hidden lg:flex lg:flex-col w-[260px] shrink-0 h-[calc(100vh-4rem)] sticky top-16 bg-white border-r border-bordercolor">
       {/* Mini profile */}
-      <div className="flex flex-col items-center text-center px-6 py-6 border-b border-bordercolor">
+      <div className="flex flex-col items-center text-center px-6 pt-6 pb-4">
         <img
-          src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=200&q=80"
+          src="https://i.pravatar.cc/200?img=12"
           alt="User avatar"
           className="w-16 h-16 rounded-2xl object-cover mb-3"
         />
-        <p className="font-semibold text-headingcolor text-sm">Elon Musk</p>
+        <p className="font-semibold text-headingcolor text-sm">Elon musk</p>
         <p className="text-primary text-xs mt-0.5">@musk</p>
+
+        <div className="flex items-center gap-2 mt-3">
+          <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center">
+            <HiOutlineShoppingBag size={14} />
+          </span>
+          <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center">
+            <HiOutlineShieldCheck size={14} />
+          </span>
+          <span className="relative w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center">
+            <HiOutlineBell size={14} />
+            <span className="absolute top-0 right-0 w-2 h-2 rounded-full bg-red-500 border border-white" />
+          </span>
+        </div>
       </div>
 
       {/* Nav groups */}
-      <nav className="flex-1 overflow-y-auto py-4 px-3">
+      <nav className="flex-1 overflow-y-auto py-2 px-3">
         {navGroups.map((group) => (
-          <div key={group.label} className="mb-5">
-            <p className="px-3 mb-2 text-[11px] font-semibold tracking-wider text-bodycolor/70 uppercase">
+          <div key={group.label} className="mb-4">
+            <p className="px-3 mb-1.5 text-[11px] font-semibold tracking-wider text-bodycolor/70 uppercase">
               {group.label}
             </p>
             <ul className="space-y-0.5">
@@ -43,10 +50,10 @@ export default function Sidebar() {
                     to={to}
                     className={({ isActive }) =>
                       [
-                        "flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium border-l-[3px] transition-colors",
+                        "flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors",
                         isActive
-                          ? "border-primary text-primary bg-primary-50"
-                          : "border-transparent text-bodycolor hover:bg-bodybg hover:text-headingcolor",
+                          ? "text-primary"
+                          : "text-bodycolor hover:text-headingcolor",
                       ].join(" ")
                     }
                   >
