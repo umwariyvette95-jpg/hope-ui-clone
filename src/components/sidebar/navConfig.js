@@ -9,9 +9,7 @@ import {
   HiOutlineQuestionMarkCircle,
 } from "react-icons/hi";
 
-// Single source of truth for the sidebar. Section 5.1 calls for three groups:
-// "File Manager" (Dashboard), "Pages" (Image/Video/Document/All Files/Trash),
-// and "Other" (Sign Out, Help). NavLink reads this to render links + highlight state.
+
 export const navGroups = [
   {
     label: "File Manager",

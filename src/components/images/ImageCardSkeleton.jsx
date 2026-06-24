@@ -1,8 +1,4 @@
-/**
- * Skeleton version of ImageCard, shown while the Picsum fetch is in flight.
- * Matches ImageCard's exact dimensions/structure so the layout doesn't jump
- * once real data arrives.
- */
+
 export default function ImageCardSkeleton({ className = "" }) {
   return (
     <div

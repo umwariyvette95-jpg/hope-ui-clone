@@ -8,7 +8,7 @@ const serviceIcon = {
   "Google Drive": SiGoogledrive,
 };
 
-/** Cloud Storage card: three connected-service progress bars. */
+
 export default function CloudStorageCard() {
   return (
     <div className="bg-white rounded-card shadow-card border border-bordercolor p-5">

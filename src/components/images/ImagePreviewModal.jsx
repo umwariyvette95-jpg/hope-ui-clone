@@ -2,11 +2,7 @@ import { useEffect } from "react";
 import { HiOutlineX, HiOutlinePhotograph } from "react-icons/hi";
 import { formatCreatedOn, timeAgo } from "../../utils/formatTime";
 
-/**
- * Read-only full preview. Section 5.2: "Each image card opens a read-only
- * full preview (lightbox or modal) when clicked - viewing only, no edit or
- * delete controls inside it." Closes on Escape, backdrop click, or the X.
- */
+
 export default function ImagePreviewModal({ image, onClose }) {
   useEffect(() => {
     function handleKey(e) {

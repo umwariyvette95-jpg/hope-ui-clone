@@ -1,11 +1,6 @@
 import { PieChart, Pie, Cell } from "recharts";
 import { storageDetails } from "../../data/dashboardData";
 
-/**
- * Storage Details card: a half-donut gauge (Recharts PieChart with
- * startAngle/endAngle) showing usedGB of totalGB, plus three labeled
- * progress bars below it (Documents/Videos/Images).
- */
 export default function StorageDetailsCard() {
   const { usedGB, totalGB, breakdown } = storageDetails;
   const data = [

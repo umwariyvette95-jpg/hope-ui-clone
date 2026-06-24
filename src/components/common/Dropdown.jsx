@@ -1,11 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-/**
- * Minimal accessible-ish dropdown: click the trigger to toggle, click anywhere
- * outside (or press Escape) to close. Used for both the cart/notifications
- * dropdown and the profile dropdown in the Navbar so that behavior isn't
- * duplicated across two components.
- */
+
 export default function Dropdown({ trigger, children, align = "right" }) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef(null);

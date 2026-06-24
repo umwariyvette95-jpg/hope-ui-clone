@@ -7,7 +7,7 @@ const typeIcon = {
   video: HiOutlineFilm,
 };
 
-/** "Recently added files" table. Delete icon is visual only - out of scope this round. */
+
 export default function RecentFilesCard() {
   return (
     <div className="bg-white rounded-card shadow-card border border-bordercolor p-5">

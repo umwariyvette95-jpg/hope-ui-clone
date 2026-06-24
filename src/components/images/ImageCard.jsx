@@ -1,16 +1,7 @@
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { formatCreatedOn, timeAgo } from "../../utils/formatTime";
 
-/**
- * Reusable card used by both the "Recently Viewed" scroller and the
- * "All Images" grid (Section 5.1: "each showing a thumbnail, the creation
- * date, the file name, and a relative 'opened X ago' timestamp derived
- * from state, not a separate hardcoded list").
- *
- * This component only reads from props - it has no knowledge of where the
- * image list comes from, so swapping the mock dataset never requires a
- * change here (Phase 2 Definition of Done).
- */
+
 export default function ImageCard({ image, onClick, className = "" }) {
   return (
     <button

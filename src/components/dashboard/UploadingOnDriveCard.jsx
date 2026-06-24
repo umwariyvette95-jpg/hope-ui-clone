@@ -1,8 +1,7 @@
 import { HiOutlineX } from "react-icons/hi";
 import { uploadingFiles } from "../../data/dashboardData";
 
-/** "Uploading on Drive" card: file name, progress bar, size, cancel icon. Visual only - cancel does nothing this round. */
-export default function UploadingOnDriveCard() {
+
   return (
     <div className="bg-white rounded-card shadow-card border border-bordercolor p-5">
       <h2 className="text-section-title text-headingcolor mb-3">Uploading on Drive</h2>

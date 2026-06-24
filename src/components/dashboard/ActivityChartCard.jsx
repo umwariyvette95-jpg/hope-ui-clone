@@ -1,7 +1,7 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip } from "recharts";
 import { activityChartData } from "../../data/dashboardData";
 
-/** Activity Chart card: a smooth monotone line of GB used per month, matching the reference's wave shape. */
+
 export default function ActivityChartCard() {
   return (
     <div className="bg-white rounded-card shadow-card border border-bordercolor p-5">

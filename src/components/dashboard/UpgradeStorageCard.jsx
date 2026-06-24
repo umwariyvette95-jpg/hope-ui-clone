@@ -1,6 +1,6 @@
 import { HiOutlineFolder } from "react-icons/hi";
 
-/** "Upgrade to Special Offer" promo card - visual only, button does nothing this round. */
+
 export default function UpgradeStorageCard() {
   return (
     <div className="bg-white rounded-card shadow-card border border-bordercolor p-6 flex flex-col items-center text-center justify-center h-full">

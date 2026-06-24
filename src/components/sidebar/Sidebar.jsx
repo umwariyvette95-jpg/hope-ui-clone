@@ -2,13 +2,7 @@ import { NavLink } from "react-router-dom";
 import { HiOutlineShoppingBag, HiOutlineShieldCheck, HiOutlineBell } from "react-icons/hi";
 import { navGroups } from "./navConfig";
 
-/**
- * Left sidebar: user mini-profile (no logo - the logo lives in the navbar,
- * matching the reference), three small icon buttons, then grouped nav
- * sections. Active route gets the Primary color on text + icon, matching
- * the reference exactly (no left border, no background tint on this design -
- * those were from an earlier guess before I had the real screenshot).
- */
+
 export default function Sidebar() {
   return (
     <aside className="hidden lg:flex lg:flex-col w-[260px] shrink-0 h-[calc(100vh-4rem)] sticky top-16 bg-white border-r border-bordercolor">

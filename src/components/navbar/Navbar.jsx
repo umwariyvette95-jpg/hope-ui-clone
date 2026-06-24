@@ -11,26 +11,16 @@ import {
 } from "react-icons/hi";
 import Dropdown from "../common/Dropdown";
 
-// Top pill-tab nav (Home / Pages / Elements), matching the reference's
-// secondary nav row. "Home" routes to the Dashboard; Pages/Elements aren't
-// part of this round's scope, so they're inert visual elements only.
 const topTabs = [
   { label: "Home", to: "/dashboard", icon: HiOutlineHome },
   { label: "Pages", icon: HiOutlineDocumentDuplicate },
   { label: "Elements", icon: HiOutlineChatAlt2 },
 ];
 
-/**
- * Top navbar - matches the reference exactly: logo + back-arrow + breadcrumb
- * on the left, a pill-tab row (Home/Pages/Elements) in the center, then
- * font-size A/A/A controls, search, cart (with unread dot), profile, and an
- * expand icon on the right. This single bar replaces the logo block that
- * used to live in the sidebar - the reference puts the logo in the navbar,
- * not the sidebar.
- */
+
 export default function Navbar() {
   const location = useLocation();
-  // crude breadcrumb label: "/images" -> "Image", "/dashboard" -> "Dashboard", etc.
+  
   const breadcrumb =
     {
       "/images": "Image",
