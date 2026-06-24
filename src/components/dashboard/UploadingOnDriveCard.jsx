@@ -1,7 +1,7 @@
 import { HiOutlineX } from "react-icons/hi";
 import { uploadingFiles } from "../../data/dashboardData";
 
-
+export default function UploadingOnDriveCard() {
   return (
     <div className="bg-white rounded-card shadow-card border border-bordercolor p-5">
       <h2 className="text-section-title text-headingcolor mb-3">Uploading on Drive</h2>
