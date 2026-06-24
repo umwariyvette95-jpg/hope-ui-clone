@@ -1,10 +1,4 @@
-/**
- * Section 5: "Related pages (context only)" share the sidebar/navbar shell
- * but aren't part of this round's scope. This single component renders a
- * simple placeholder for all of them, parameterized by title - it keeps
- * App.jsx's route table honest (every sidebar link goes to a real route)
- * without duplicating five nearly-identical files.
- */
+
 export default function PlaceholderPage({ title }) {
   return (
     <div className="flex flex-col items-center justify-center text-center py-24 px-6 bg-white rounded-card border border-dashed border-bordercolor">

@@ -6,14 +6,7 @@ import ImageCardSkeleton from "../components/images/ImageCardSkeleton";
 import ImagePreviewModal from "../components/images/ImagePreviewModal";
 import EmptyState from "../components/images/EmptyState";
 
-/**
- * Image Folder page (Section 5.2). Everything here reads from useImages() -
- * there is no hardcoded array left in this component. Recently Viewed and
- * the All Images grid are two different *views* over the same source of
- * truth, not two separate datasets. Photos themselves come from the Picsum
- * API on mount, so this page also handles the loading/error states that
- * come with a real network call.
- */
+
 export default function ImageFolderPage() {
   const {
     recentlyViewed,

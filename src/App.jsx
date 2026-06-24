@@ -5,12 +5,7 @@ import ImageFolderPage from "./pages/ImageFolderPage";
 import PlaceholderPage from "./pages/PlaceholderPage";
 import { ImagesProvider } from "./context/ImagesContext";
 
-/**
- * Route table. Every sidebar link in navConfig.js points to a real route
- * here (Required Tech Stack: "sidebar links must be real routes"). Dashboard
- * and Image Folder both have real content; Video/Document/All Files/Trash
- * render PlaceholderPage so navigating to them doesn't 404.
- */
+
 export default function App() {
   return (
     <ImagesProvider>

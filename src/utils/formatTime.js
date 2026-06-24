@@ -1,9 +1,4 @@
-/**
- * Converts an ISO timestamp into a relative "time ago" string, e.g. "2 days ago",
- * "a month ago", "just now". This is what lets ImageCard show "You opened {x} ago"
- * by deriving it from state (lastOpenedAt) rather than a second hardcoded string,
- * per the assignment's Phase 2 requirement.
- */
+
 export function timeAgo(isoString) {
   const then = new Date(isoString).getTime();
   const now = Date.now();
@@ -29,7 +24,7 @@ export function timeAgo(isoString) {
   return years === 1 ? "a year ago" : `${years} years ago`;
 }
 
-/** Formats an ISO date as "Created on Dec 13, 2020" to match the reference design. */
+
 export function formatCreatedOn(isoString) {
   const date = new Date(isoString);
   const formatted = date.toLocaleDateString("en-US", {

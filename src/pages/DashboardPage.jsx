@@ -7,16 +7,6 @@ import RecentFilesCard from "../components/dashboard/RecentFilesCard";
 import CloudStorageCard from "../components/dashboard/CloudStorageCard";
 import UpgradeStorageCard from "../components/dashboard/UpgradeStorageCard";
 
-/**
- * Dashboard / Home page. Per the assignment brief, related pages outside
- * the Image Folder are "context only" - this page is fully hardcoded
- * (no Context, no useReducer) since it isn't part of this round's graded
- * state-management scope, only its visual fidelity to the reference.
- *
- * Layout mirrors the reference exactly: folders grid + storage gauge side
- * by side, then activity chart + uploads panel, then recent files + cloud
- * storage + upgrade promo along the bottom.
- */
 export default function DashboardPage() {
   return (
     <div className="space-y-6">

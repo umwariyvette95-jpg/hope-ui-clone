@@ -2,35 +2,15 @@ import { createContext, useContext, useEffect, useMemo, useReducer } from "react
 import { imageMeta } from "../data/imageMeta";
 import { fetchPicsumPhotos, picsumImageUrl } from "../services/picsumApi";
 
-/**
- * Central store for the Image Folder feature.
- *
- * Why Context + useReducer and not Redux/Zustand:
- * This app has one shared slice of state (the image list, loading/error
- * status, the active search term, and which image is open in the preview
- * modal) that a handful of sibling components need to read. useReducer keeps
- * the update logic in one place as named actions, and Context lets
- * ImageCard, the grid, the scroller, and the modal all read/write it without
- * prop-drilling through AppLayout. There's no cross-cutting middleware or
- * caching layer that would justify Redux Toolkit's extra ceremony here -
- * even now that data comes from a real API call, it's a single fetch-once
- * effect, not a pattern that needs query caching/invalidation machinery.
- *
- * Images now come from the Picsum Photos API (no key required) instead of
- * hardcoded URLs. Local mock metadata (file name, createdAt, lastOpenedAt)
- * lives in data/imageMeta.js and gets merged with each fetched photo's id
- * once, on mount - components downstream never know or care that the photo
- * itself came from a network call instead of a local file.
- */
 
 const ImagesContext = createContext(null);
 
 const initialState = {
-  images: [], // populated once the Picsum fetch resolves
-  status: "idle", // "idle" | "loading" | "success" | "error"
+  images: [], 
+  status: "idle",
   error: null,
   searchTerm: "",
-  previewImageId: null, // id of the image currently open in the read-only lightbox, or null
+  previewImageId: null, 
 };
 
 function imagesReducer(state, action) {
@@ -48,9 +28,7 @@ function imagesReducer(state, action) {
     case "CLOSE_PREVIEW":
       return { ...state, previewImageId: null };
     case "MARK_OPENED": {
-      // Touches lastOpenedAt so "Recently Viewed" reorders live as you click cards.
-      // This is the only "mutation" in the app, and it's purely a read-tracking
-      // timestamp - it does not add, remove, or edit any image data.
+     
       return {
         ...state,
         images: state.images.map((img) =>
@@ -68,9 +46,7 @@ function imagesReducer(state, action) {
 export function ImagesProvider({ children }) {
   const [state, dispatch] = useReducer(imagesReducer, initialState);
 
-  // Fetch once on mount, merge with local metadata, store the result.
-  // This is the one and only place in the app that talks to the network -
-  // everything else reads from state.images.
+
   useEffect(() => {
     let cancelled = false;
 
@@ -98,7 +74,7 @@ export function ImagesProvider({ children }) {
     };
   }, []);
 
-  // Derived views - computed from the single source of truth, never duplicated arrays.
+  
   const recentlyViewed = useMemo(() => {
     return [...state.images]
       .sort((a, b) => new Date(b.lastOpenedAt) - new Date(a.lastOpenedAt))
@@ -138,7 +114,7 @@ export function ImagesProvider({ children }) {
   return <ImagesContext.Provider value={value}>{children}</ImagesContext.Provider>;
 }
 
-/** Hook for consuming the images store. Keeps components from importing useContext + ImagesContext directly. */
+
 export function useImages() {
   const ctx = useContext(ImagesContext);
   if (!ctx) {
